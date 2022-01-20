@@ -13,8 +13,9 @@ public class Sort<T> { // Class Sort is a generic class with type parameter T
                     return 0;
             }
         };
-        // Creating a comparator usign
+        // Creating a comparator of type Double and naming in compDouble, following the convention from above
         Comparator<Double> compDouble = new Comparator<Double>() {
+        // Now comparing two Doubles, not strings
             public int compare(Double a, Double b) {
                 if (a.compareTo(b) > 0)
                     return 1;
@@ -26,7 +27,7 @@ public class Sort<T> { // Class Sort is a generic class with type parameter T
         
         ;
         Sort<String> sortStrings = new Sort<String>();
-        Sort<Double> sortDouble = new Sort<Double>();
+        
 // Initialising an array of Strings with 16 unordered elements.
 // Array length must be a power of 2.
         String[] arrayOfStrings = { "Blue", "Yellow", "Almond", "Onyx", "Peach", "Gold",
@@ -35,7 +36,10 @@ public class Sort<T> { // Class Sort is a generic class with type parameter T
 // Sorting the array by calling the sort-method
         sortStrings.sort(arrayOfStrings, compString);
         System.out.println("Sorted array: " + Arrays.toString(arrayOfStrings));
-        
+	
+	// Creating a new sort object to handle the Doubles
+        Sort<Double> sortDouble = new Sort<Double>();
+	// Creating a new array of doubles to test out the sorting
         Double[] arrayOfDoubles = new Double[]{ 36d,24d,32d,64d,10d, 15d, 19d, 20d, 12d,13d, 51d, 8d, 53d, 7d, 61d, 25d};
         System.out.println("Original array: " + Arrays.toString(arrayOfDoubles));
 // Sorting the array by calling the sort-method
