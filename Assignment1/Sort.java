@@ -4,7 +4,8 @@ public class Sort<T> { // Class Sort is a generic class with type parameter T
     T[] array; // The array of objects of type T we want to sort
     Comparator<T> comp; // A Comparator instance suitable for comparing objects of type T
     public static void main(String[] args) {
-// A comparator for objects of type String:
+	/*
+	// A comparator for objects of type String:
         Comparator<String> compString = new Comparator<String>() {
             public int compare(String a, String b) {
                 if (a.compareTo(b) > 0)
@@ -13,19 +14,13 @@ public class Sort<T> { // Class Sort is a generic class with type parameter T
                     return 0;
             }
         };
-        // Creating a comparator of type Double and naming in compDouble, following the convention from above
-        Comparator<Double> compDouble = new Comparator<Double>() {
-        // Now comparing two Doubles, not strings
-            public int compare(Double a, Double b) {
-                if (a.compareTo(b) > 0)
-                    return 1;
-                else
-                    return 0;
-            }
-        }
-        
-        
-        ;
+	*/
+	// Part B
+	// Creating a comparator called compString with expected input String
+	 Comparator<String> compString
+	 // Setting up a & b as Strings. Then using the comparison from the given code and repacking it into a lambda function 
+        	= (String a, String b) -> {if (a.compareTo(b) > 0){return 1;}else{return 0;}};
+        	
         Sort<String> sortStrings = new Sort<String>();
         
 // Initialising an array of Strings with 16 unordered elements.
@@ -37,6 +32,25 @@ public class Sort<T> { // Class Sort is a generic class with type parameter T
         sortStrings.sort(arrayOfStrings, compString);
         System.out.println("Sorted array: " + Arrays.toString(arrayOfStrings));
 	
+	/*
+	 PART A
+        // Creating a comparator of type Double and naming in compDouble, following the convention from above
+        Comparator<Double> compDouble = new Comparator<Double>() {
+        // Now comparing two Doubles, not strings
+            public int compare(Double a, Double b) {
+                if (a.compareTo(b) > 0)
+                    return 1;
+                else
+                    return 0;
+            }
+        };
+        */
+        
+	// PART B
+        Comparator<Double> compDouble 
+        	= (Double a, Double b) -> {if (a.compareTo(b) > 0){return 1;}else{return 0;}};
+
+        	
 	// Creating a new sort object to handle the Doubles
         Sort<Double> sortDouble = new Sort<Double>();
 	// Creating a new array of doubles to test out the sorting
