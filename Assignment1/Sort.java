@@ -84,6 +84,14 @@ public class Sort<T> extends Thread{ // Class Sort is a generic class with type 
             // Starting the threads and printing out the thread ID to check that new threads are being used for each object.
             t1.start();
             t2.start();
+            try{
+            	t1.join();
+            	}
+            	catch(InterruptedException e){}
+            try{
+            	t2.join();
+            	}
+            	catch(InterruptedException e){}
 
             //sleep this
             combine(low, n, 1);
