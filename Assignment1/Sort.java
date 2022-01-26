@@ -74,20 +74,19 @@ public class Sort<T> extends Thread{ // Class Sort is a generic class with type 
                     () -> {sort(low, mid);};
             Runnable s2 =
                     () -> {sort(low + mid, mid);};
-            Runnable c =
-                    () -> {combine(low, n, 1);};
+  
+
 
             // creating the threads needed to run each runnable interface
             Thread t1 = new Thread(s1);
             Thread t2 = new Thread(s2);
-            Thread t3 = new Thread(c);
+
             // Starting the threads and printing out the thread ID to check that new threads are being used for each object.
             t1.start();
-            System.out.println(Thread.currentThread().getName());
             t2.start();
-            System.out.println(Thread.currentThread().getName());
-            t3.start();
-            System.out.println(Thread.currentThread().getName());
+
+            //sleep this
+            combine(low, n, 1);
 
         }
     }
