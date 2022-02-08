@@ -1,17 +1,21 @@
 package com.company;
-import java.util.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class WeatherStation {
-    static String city;
-    // Creating a list of measurement objects
-    List<Object> measurements = new ArrayList<Object>();
-
-    //Measurement measurements = new Measurement();
+    String city;
     static List<String> stations = new ArrayList<String>();
+
+    List<Measurement> measurements = new ArrayList<Measurement>();
+    public WeatherStation (String city, String stations){
+        this.city = city;
+    };
+
+
+
 
     double maxTemperature(int startTime, int endTime){
         // Calculate the max temp between two timestamps using Java 8 streams, returning the max temp.
@@ -25,60 +29,74 @@ public class WeatherStation {
     public static void main(String[] args) {
         // write your code here
 
-
-        stations.add("Dublin Airport"); // Weather Station 1 - ws1
-        stations.add("MET office");     // Weather Station 2 - ws2
-        city = "Dublin";
-
         // Adding weather stations & adding measurements
-        WeatherStation w1 = new WeatherStation();
-        w1.measurements.add(new Measurement(2, 16d));
-        w1.measurements.add(new Measurement(2, 16d));
-        w1.measurements.add(new Measurement(3, 12d));
-        w1.measurements.add(new Measurement(4, 20d));
-        w1.measurements.add(new Measurement(5, 22d));
+        WeatherStation w1 = new WeatherStation("Dublin", "Airport");
+        Measurement m1 = new Measurement();
+        m1.setTime(1);
+        m1.setTemp(22);
 
+        Measurement m2 = new Measurement();
+        m2.setTime(2);
+        m2.setTemp(10);
 
-        WeatherStation w2 = new WeatherStation();
-        w2.measurements.add(new Measurement(2, 13d));
-        w2.measurements.add(new Measurement(2, 14d));
-        w2.measurements.add(new Measurement(3, 16d));
-        w2.measurements.add(new Measurement(4, 14d));
-        w2.measurements.add(new Measurement(5, 25d));
+        Measurement m3 = new Measurement();
+        m3.setTime(3);
+        m3.setTemp(50);
 
+        Measurement m4 = new Measurement();
+        m4.setTime(4);
+        m4.setTemp(-274);
 
+        w1.measurements.add(m1);
+        w1.measurements.add(m2);
+        w1.measurements.add(m3);
+        w1.measurements.add(m4);
+
+        System.out.println(m1.getTime());
+        System.out.println(w1.measurements.get(0).getTime());
+
+        w1.measurements.stream()
+                .filter(x->x.getTime()>1 && x.getTime()<5)
+                .mapToDouble(x->x.getTemp()).max()
+                .forEach(x-> System.out.println(x));
+        /// Fix this
 
         // Checking that the data is being stored properly
-        System.out.println(city);
-        System.out.println(stations);
-        System.out.println("Station 1 readings: "+w1.measurements);
-        System.out.println("Station 1 counts "+w1.maxTemperature(1,3));
-        System.out.println("Station 2 readings: "+w2.measurements);
-        System.out.println("Station 2 readings: "+w2.measurements.get(1));
 
-
-        //w2.measurements.stream().allMatch(time -> valueInt(w2.measurements.get(0))>1);
-        /*Integer max = w1.measurements
-                .stream()
-                .mapToInt(v -> v[0])
-                .max().orElseThrow(NoSuchElementException::new);
-
-         */
     }
 
     static class Measurement{
+        public int time;
+        public double temperature;
         // Class constructor
-        public Measurement(int time, double temperature){
-            this.time = time;
-            this.temperature = temperature;
-        };
+        //public Measurement(int time, double temperature){
+         //   this.time = time;
+        //    this.temperature = temperature;
+
+        //};
+        public void setTime(int time){
+            this.time=time;
+        }
+        public int getTime(){
+            return time;
+        }
+        public void setTemp(double temperature){
+            this.temperature=temperature;
+        }
+        public double getTemp(){
+            return temperature;
+        }
+
         // Overriding toString so I can see the values instead of location in memory
         @Override
         public String toString(){
             return (this.time +":"+this.temperature);
        }
-        public int time;
-        public double temperature;
+
+
+
+
+
     }
 
 
