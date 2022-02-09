@@ -22,13 +22,16 @@ public class WeatherStation {
 
 
     double maxTemperature(int startTime, int endTime){
-        // Calculate the max temp between two timestamps using Java 8 streams, returning the max temp.
-        // Will require a filter and a max function.
-        //Stream<String> init = measurements.stream();
-        //Stream<Double> minTime =init.filter(temperature -> time>startTime).count();
-        //return minTime;
-        return 2;
+        return this.measurements.stream()
+                .filter(x->x.getTime()>startTime && x.getTime()<endTime)
+                .mapToDouble(x->x.getTemp())
+                .max()
+                .getAsDouble();
     };
+
+    //double countTemperatures(t1, t2, r){
+    //
+    //}
 
     public static void main(String[] args) {
         // write your code here
@@ -92,13 +95,9 @@ public class WeatherStation {
         System.out.println(w2.measurements.get(0).getTime());
         System.out.println(w2.stations);
 
-        System.out.println(w1.measurements.stream()
-                //.filter(x->x.getTime()>1 && x.getTime()<5)
-                .map(x->x.getTemp())
-                //.sorted()
-                .collect(maxBy(Comparator.naturalOrder())));
-                //.forEach(x-> System.out.println(x));
 
+                //.forEach(x-> System.out.println(x));
+        System.out.println(w1.maxTemperature(1,5));
         /// Fix this
 
         // Checking that the data is being stored properly
