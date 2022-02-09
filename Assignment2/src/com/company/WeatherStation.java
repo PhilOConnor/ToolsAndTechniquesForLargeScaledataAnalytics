@@ -1,16 +1,20 @@
 package com.company;
 import java.util.ArrayList;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.maxBy;
+import static java.util.stream.Collectors.summarizingDouble;
 
 public class WeatherStation {
     String city;
     static List<String> stations = new ArrayList<String>();
 
     List<Measurement> measurements = new ArrayList<Measurement>();
-    public WeatherStation (String city, String stations){
+    public WeatherStation (String city){
         this.city = city;
     };
 
@@ -28,9 +32,11 @@ public class WeatherStation {
 
     public static void main(String[] args) {
         // write your code here
-
+        WeatherStation.stations.add("Airport");
+        WeatherStation.stations.add("Met Office");
         // Adding weather stations & adding measurements
-        WeatherStation w1 = new WeatherStation("Dublin", "Airport");
+        WeatherStation w1 = new WeatherStation("Dublin");
+
         Measurement m1 = new Measurement();
         m1.setTime(1);
         m1.setTemp(22);
@@ -52,13 +58,47 @@ public class WeatherStation {
         w1.measurements.add(m3);
         w1.measurements.add(m4);
 
+
+        WeatherStation w2 = new WeatherStation("Dublin");
+        Measurement m5 = new Measurement();
+        m5.setTime(1);
+        m5.setTemp(10);
+
+        Measurement m6 = new Measurement();
+        m6.setTime(2);
+        m6.setTemp(5);
+
+        Measurement m7 = new Measurement();
+        m7.setTime(3);
+        m7.setTemp(-5);
+
+        Measurement m8 = new Measurement();
+        m8.setTime(4);
+        m8.setTemp(5000);
+
+        w2.measurements.add(m5);
+        w2.measurements.add(m6);
+        w2.measurements.add(m7);
+        w2.measurements.add(m8);
+
+
         System.out.println(m1.getTime());
         System.out.println(w1.measurements.get(0).getTime());
+        System.out.println(w1.stations);
 
-        w1.measurements.stream()
-                .filter(x->x.getTime()>1 && x.getTime()<5)
-                .mapToDouble(x->x.getTemp()).max()
-                .forEach(x-> System.out.println(x));
+
+
+        System.out.println(m1.getTime());
+        System.out.println(w2.measurements.get(0).getTime());
+        System.out.println(w2.stations);
+
+        System.out.println(w1.measurements.stream()
+                //.filter(x->x.getTime()>1 && x.getTime()<5)
+                .map(x->x.getTemp())
+                //.sorted()
+                .collect(maxBy(Comparator.naturalOrder())));
+                //.forEach(x-> System.out.println(x));
+
         /// Fix this
 
         // Checking that the data is being stored properly
