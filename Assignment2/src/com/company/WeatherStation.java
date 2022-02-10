@@ -1,6 +1,7 @@
 package com.company;
 import java.util.ArrayList;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +12,7 @@ import static java.util.stream.Collectors.summarizingDouble;
 
 public class WeatherStation {
     String city;
-    static List<String> stations = new ArrayList<String>();
+    static List<WeatherStation> stations = new ArrayList<WeatherStation>();
 
     List<Measurement> measurements = new ArrayList<Measurement>();
     public WeatherStation (String city){
@@ -28,17 +29,25 @@ public class WeatherStation {
                 .max()
                 .getAsDouble();
     };
+/*
+    double  countTemperatures(int t1, int t2, int r){
+        return this.stations.stream()
+                .flatMap(x::stream)
+                .map(x->x.toString())
+                .mapToDouble(x-> x.getTemp())
+                .filter(x->x>=t1-r && x<=t1+r)
+                .count();
 
-    //double countTemperatures(t1, t2, r){
-    //
-    //}
 
+
+    }
+*/
     public static void main(String[] args) {
         // write your code here
-        WeatherStation.stations.add("Airport");
-        WeatherStation.stations.add("Met Office");
+
         // Adding weather stations & adding measurements
         WeatherStation w1 = new WeatherStation("Dublin");
+        WeatherStation.stations.add(w1);
 
         Measurement m1 = new Measurement();
         m1.setTime(1);
@@ -46,15 +55,15 @@ public class WeatherStation {
 
         Measurement m2 = new Measurement();
         m2.setTime(2);
-        m2.setTemp(10);
+        m2.setTemp(20);
 
         Measurement m3 = new Measurement();
         m3.setTime(3);
-        m3.setTemp(50);
+        m3.setTemp(25);
 
         Measurement m4 = new Measurement();
         m4.setTime(4);
-        m4.setTemp(-274);
+        m4.setTemp(18);
 
         w1.measurements.add(m1);
         w1.measurements.add(m2);
@@ -63,21 +72,22 @@ public class WeatherStation {
 
 
         WeatherStation w2 = new WeatherStation("Dublin");
+        WeatherStation.stations.add(w2);
         Measurement m5 = new Measurement();
         m5.setTime(1);
-        m5.setTemp(10);
+        m5.setTemp(17);
 
         Measurement m6 = new Measurement();
         m6.setTime(2);
-        m6.setTemp(5);
+        m6.setTemp(19);
 
         Measurement m7 = new Measurement();
         m7.setTime(3);
-        m7.setTemp(-5);
+        m7.setTemp(22);
 
         Measurement m8 = new Measurement();
         m8.setTime(4);
-        m8.setTemp(5000);
+        m8.setTemp(20);
 
         w2.measurements.add(m5);
         w2.measurements.add(m6);
@@ -96,9 +106,16 @@ public class WeatherStation {
         System.out.println(w2.stations);
 
 
-                //.forEach(x-> System.out.println(x));
+
         System.out.println(w1.maxTemperature(1,5));
-        /// Fix this
+        //
+        //countTemperatures(1,2,3);
+        System.out.println("Testing countTemperature");
+
+        w1.stations.stream()
+                .flatMap(x-> x.measurements)
+                .
+
 
         // Checking that the data is being stored properly
 
