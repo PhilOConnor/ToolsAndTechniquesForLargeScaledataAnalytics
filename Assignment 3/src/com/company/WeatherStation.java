@@ -32,14 +32,22 @@ public class WeatherStation implements Serializable {
 
 
     static int countTemperature(JavaSparkContext sc, Integer t){
+        // Something isnt right - keep getting serialisation error
+        // Create an RDD pair of temp and countTemp. Create a parallel RDD of weather stations
          JavaPairRDD<Integer, Integer> distData = sc.parallelize(WeatherStation.stations)
+                 // break out each measurement by each weather station
                 .flatMap(ws -> ws.measurements.iterator())
-                .filter(m->m.getTemp()>= t-5 && m.getTemp()<= t+5)
+                 // Filter the measurements for temps t +/- 1
+                .filter(m->m.getTemp()>= t-1 && m.getTemp()<= t+1)
+                 // Assign these a key of t and value of 1
                 .mapToPair(m-> new Tuple2<Integer, Integer>(t,1))
+                 // Sum up by the key t
                  .reduceByKey((Integer a,Integer b)-> a+b);
+         // A list with 1 item - the tuple JavaPairRDD - this is in the lecture notes for WordCount - I cant get it another way.
          List<Tuple2<Integer,Integer>> output= distData.collect();
         sc.stop();
         sc.close();
+        // Return the ._2 item (the count) of the temps
          return output.get(0)._2();
 
 
