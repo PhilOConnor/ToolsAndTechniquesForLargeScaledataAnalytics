@@ -1,0 +1,23 @@
+return new Tuple2<Vector/*features (coordinates)*/, AnnotatedTweet>(Vectors.dense(coordinates), 
+
+		new AnnotatedTweet(tweet, spamFlag)); 
+
+
+
+});
+
+
+
+parsedData.cache();
+
+
+int numOfClusters = 4;
+
+int numOfIterations = 100; // need to figure out suitable value (but doesn't matter for small data set)
+
+
+KMeansModel model = KMeans.train(parsedData.map(p -> p._1).rdd(), numOfClusters, numOfIterations);
+
+
+
+JavaRDD<Tuple2<AnnotatedTweet, Integer>> tweetsWithClusterIndices = parsedData.map(p -> new Tuple2<AnnotatedTweet, Integer>(p._2, model.predict(p._1)));
