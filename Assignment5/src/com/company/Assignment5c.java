@@ -38,18 +38,21 @@ public class Assignment5c {
                     }
                 }
         );
-
+        // Filter out the hashtags
         JavaDStream<String> hashTags = tweets.flatMap((String s) -> Arrays.asList(s.split(" ")).iterator()).filter(y->y.contains("#"));
         //JavaPairDStream<String, Long> tagCounts = hashTags.countByValueAndWindow(new Duration(6000), new Duration(2000));
         JavaPairDStream<String, Long> tagCounts = hashTags.countByValue();
+        // Swap the countByValue around so keys are the counts and values are the hashtags
         JavaPairDStream<Long,String> swappedPair = tagCounts.mapToPair(Tuple2::swap);
+        // Sort the swapped pair d stream on the keys (hashtag counts)
         JavaPairDStream<Long,String> sortedStream = swappedPair.transformToPair(s -> s.sortByKey(false));
+        // extract only the hashtags from the sorted pair d stream
         JavaDStream<String> freqHashtag = sortedStream.map(y->y._2);
 
 
 
 
-        jssc.checkpoint("Checkpoints");
+        //print the 1st element of the sorted dstream
         freqHashtag.print(1);
 
 

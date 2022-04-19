@@ -23,9 +23,10 @@ public class Assignment5a {
         // These two lines remove a lot of unneccessary output that clutters the desired output
         JavaSparkContext sc = jssc.sparkContext();
         sc.setLogLevel("ERROR");
-
+        // Create the connection to Twotter
         JavaReceiverInputDStream<String> lines = jssc.socketTextStream("localhost", 9999);
-        // Print the first ten elements of each RDD generated in this DStream to the console
+
+        // Map the tweets to lines and return them
         JavaDStream<String> tweets = lines.map(
                 new Function<String, String>() {
                     @Override
@@ -34,6 +35,7 @@ public class Assignment5a {
                     }
                 }
         );
+        // Print the first ten elements of each RDD generated in this DStream to the console
         tweets.print();
         jssc.start();
         jssc.awaitTermination();
